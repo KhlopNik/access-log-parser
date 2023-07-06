@@ -1,4 +1,5 @@
 import java.io.*;
+import java.text.DecimalFormat;
 import java.util.Scanner;
 
 public class Main {
@@ -24,12 +25,13 @@ public class Main {
                 int count = 0;
                 int max = 0;
                 int min = 0;
+
+                double countYaBot = 0;
+                double countGBot = 0;
                 try {
                     FileReader fileReader = new FileReader(path);
                     BufferedReader reader = new BufferedReader(fileReader);
                     String line;
-                    max = reader.readLine().length();
-                    min = reader.readLine().length();
                     while ((line = reader.readLine()) != null) {
                         int length = line.length();
                         if (length > max) {
@@ -47,14 +49,24 @@ public class Main {
                         }
 
                         count++;
+
+                        if (line.contains("Googlebot")) {
+                            countGBot++;
+                        }
+                        if (line.contains("YandexBot")) {
+                            countYaBot++;
+                        }
                     }
 
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
+                DecimalFormat decimalFormat = new DecimalFormat("#.##");
+                String roundedNumber1 = decimalFormat.format((countYaBot / count) * 100);
+                String roundedNumber2 = decimalFormat.format((countGBot / count) * 100);
 
-                System.out.println("Минимальное количество символов в строке: " + min);
-                System.out.println("Максимальное количество символов в строке: " + max);
+                System.out.println("Доля запросов YandexBot: " + roundedNumber1 + "%");
+                System.out.println("Доля запросов GoogleBot: " + roundedNumber2 + "%");
                 System.out.println("Количество строк в файле: " + count);
 
                 continue;
