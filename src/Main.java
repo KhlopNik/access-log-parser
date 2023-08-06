@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) throws IOException {
         //System.out.println("Случайное число от 0 до 1: " + Math.random());
+        System.out.println("Введите путь к файлу:");
         int countTruePathInFile = 0;
         while (true) {
             String path = new Scanner(System.in).nextLine();
@@ -32,6 +33,7 @@ public class Main {
                     FileReader fileReader = new FileReader(path);
                     BufferedReader reader = new BufferedReader(fileReader);
                     String line;
+                    Statistics stat = new Statistics();
                     while ((line = reader.readLine()) != null) {
                         int length = line.length();
                         if (length > max) {
@@ -56,6 +58,20 @@ public class Main {
                         if (line.contains("YandexBot")) {
                             countYaBot++;
                         }
+                        LogEntry lg = new LogEntry(line);
+
+                        //System.out.println("IP: " + lg.getIpAddr());
+                        //System.out.println("DateTime: " + lg.getTime());
+                        //System.out.println("HttpMethod: " + lg.getMethod());
+                        //System.out.println("getPath: " + lg.getPath());
+                        //System.out.println("responseCode: " + lg.getResponseCode());
+                        //System.out.println("getResponseSize: " + lg.getResponseSize());
+                        //System.out.println("getReferer: " + lg.getReferer());
+                        //System.out.println("get OS type: " + lg.getUserAgent().getOsType());
+                        //System.out.println("get Browser type: " + lg.getUserAgent().getNameBrowser());
+                        //System.out.println("-------------------------");
+
+                        stat.addEntry(lg);
                     }
 
                 } catch (Exception ex) {
