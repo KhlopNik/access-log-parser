@@ -10,15 +10,23 @@ public class Statistics {
     private HashSet<String> addressesOfExistingPages;
     private HashMap<String, Integer> frequencyOfOccurrenceOfOperatingSystems;
     private LocalDateTime maxTime;
-    private HashMap<String, Double> shareOS;
-    private double count;
+    private HashMap<String, Double> shareOSForExistingPages;
+    private double countOfExistingPages;
+    private HashMap<String, Integer> frequencyOfNotOccurrenceOfOperatingSystems;
+    private HashSet<String> addressesOfNotExistingPages;
+    private HashMap<String, Double> shareOSForNotExistingPages;
+    private double countOfNotExistingPages;
     public Statistics(){
         this.minTime = LocalDateTime.of(9999,1,1,1,1,1);
         this.maxTime = LocalDateTime.of(1000,1,1,1,1,1);
         this.addressesOfExistingPages = new HashSet<>();
         this.frequencyOfOccurrenceOfOperatingSystems = new HashMap<>();
-        this.count = 0;
-        this.shareOS = new HashMap<>();
+        this.countOfExistingPages = 0;
+        this.frequencyOfNotOccurrenceOfOperatingSystems = new HashMap<>();
+        this.shareOSForExistingPages = new HashMap<>();
+        this.addressesOfNotExistingPages = new HashSet<>();
+        this.countOfNotExistingPages = 0;
+        this.shareOSForNotExistingPages = new HashMap<>();
     }
 
     public int getTotalTraffic() {
@@ -34,33 +42,65 @@ public class Statistics {
         if (lg.getTime().isAfter(maxTime)){
             this.maxTime = lg.getTime();
         }
-        saveAddressesOfExistingPage(lg);
-        saveOS(lg);
+        if (saveAddressesOfExistingPage(lg)){
+            saveOSOfExistingPage(lg);
+        }
+        if (saveAddressesOfNotExistingPage(lg)){
+            saveOSOfNotExistingPage(lg);
+        }
     }
-    public void saveOS(LogEntry lg){
-        count++;
+    public void saveOSOfExistingPage(LogEntry lg){
         String os = lg.getUserAgent().getOsType().toString();
         if (this.frequencyOfOccurrenceOfOperatingSystems.containsKey(os)){
             int i = this.frequencyOfOccurrenceOfOperatingSystems.get(os);
             this.frequencyOfOccurrenceOfOperatingSystems.put(os,i + 1);
 
             this.frequencyOfOccurrenceOfOperatingSystems.forEach((key, value) -> {
-                this.shareOS.put(key, value/count);
+                this.shareOSForExistingPages.put(key, value/ countOfExistingPages);
             });
 
         } else {
             this.frequencyOfOccurrenceOfOperatingSystems.put(os,1);
 
             this.frequencyOfOccurrenceOfOperatingSystems.forEach((key, value) -> {
-                this.shareOS.put(key, value/count);
+                this.shareOSForExistingPages.put(key, value/ countOfExistingPages);
+            });
+        }
+    }
+    public void saveOSOfNotExistingPage(LogEntry lg){
+        String os = lg.getUserAgent().getOsType().toString();
+        if (this.frequencyOfNotOccurrenceOfOperatingSystems.containsKey(os)){
+            int i = this.frequencyOfNotOccurrenceOfOperatingSystems.get(os);
+            this.frequencyOfNotOccurrenceOfOperatingSystems.put(os,i + 1);
+
+            this.frequencyOfNotOccurrenceOfOperatingSystems.forEach((key, value) -> {
+                this.shareOSForNotExistingPages.put(key, value/ countOfNotExistingPages);
+            });
+
+        } else {
+            this.frequencyOfNotOccurrenceOfOperatingSystems.put(os,1);
+
+            this.frequencyOfNotOccurrenceOfOperatingSystems.forEach((key, value) -> {
+                this.shareOSForNotExistingPages.put(key, value/ countOfNotExistingPages);
             });
         }
     }
 
-    public void saveAddressesOfExistingPage(LogEntry lg){
+    public Boolean saveAddressesOfExistingPage(LogEntry lg){
         if (lg.getResponseCode() == 200 ) {
             this.addressesOfExistingPages.add(lg.getPath());
+            countOfExistingPages++;
+            return true;
         }
+        return false;
+    }
+    public Boolean saveAddressesOfNotExistingPage(LogEntry lg){
+        if (lg.getResponseCode() == 404 ) {
+            this.addressesOfNotExistingPages.add(lg.getPath());
+            countOfNotExistingPages++;
+            return true;
+        }
+        return false;
     }
 
     public long getTrafficRate(){
@@ -72,14 +112,34 @@ public class Statistics {
     }
 
     public HashSet<String> getAddressesOfExistingPages() {
-        return addressesOfExistingPages;
+        return this.addressesOfExistingPages;
     }
 
     public HashMap<String, Integer> getFrequencyOfOccurrenceOfOperatingSystems() {
-        return frequencyOfOccurrenceOfOperatingSystems;
+        return this.frequencyOfOccurrenceOfOperatingSystems;
     }
 
-    public HashMap<String, Double> getShareOS() {
-        return shareOS;
+    public HashMap<String, Double> getShareOSForExistingPages() {
+        return this.shareOSForExistingPages;
+    }
+
+    public HashSet<String> getAddressesOfNotExistingPages() {
+        return this.addressesOfNotExistingPages;
+    }
+
+    public double getCountOfExistingPages() {
+        return this.countOfExistingPages;
+    }
+
+    public HashMap<String, Double> getShareOSForNotExistingPages() {
+        return this.shareOSForNotExistingPages;
+    }
+
+    public double getCountOfNotExistingPages() {
+        return this.countOfNotExistingPages;
+    }
+
+    public HashMap<String, Integer> getFrequencyOfNotOccurrenceOfOperatingSystems() {
+        return this.frequencyOfNotOccurrenceOfOperatingSystems;
     }
 }

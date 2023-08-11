@@ -73,8 +73,14 @@ public class Main {
 
                         stat.addEntry(lg);
                     }
-                    System.out.println("getFrequencyOfOccurrenceOfOperatingSystems: " + stat.getFrequencyOfOccurrenceOfOperatingSystems());
-                    System.out.println("getShareOS: " + stat.getShareOS());
+                    //System.out.println("getAddressesOfExistingPages: " + stat.getAddressesOfExistingPages());
+                    //System.out.println("getFrequencyOfOccurrenceOfOperatingSystems: " + stat.getFrequencyOfOccurrenceOfOperatingSystems());
+                    //System.out.println("getShareOSForExistingPages: " + stat.getShareOSForExistingPages());
+                    //System.out.println("getCountOfExistingPages: " + stat.getCountOfExistingPages());
+                    //System.out.println("getAddressesOfNotExistingPages: " + stat.getAddressesOfNotExistingPages());
+                    //System.out.println("getFrequencyOfNotOccurrenceOfOperatingSystems: " + stat.getFrequencyOfNotOccurrenceOfOperatingSystems());
+                    //System.out.println("getShareOSForNotExistingPages: " + stat.getShareOSForNotExistingPages());
+                    //System.out.println("getCountOfNotExistingPages: " + stat.getCountOfNotExistingPages());
 
                 } catch (Exception ex) {
                     ex.printStackTrace();
