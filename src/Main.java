@@ -73,6 +73,8 @@ public class Main {
 
                         stat.addEntry(lg);
                     }
+                    System.out.println("getFrequencyOfOccurrenceOfOperatingSystems: " + stat.getFrequencyOfOccurrenceOfOperatingSystems());
+                    System.out.println("getShareOS: " + stat.getShareOS());
 
                 } catch (Exception ex) {
                     ex.printStackTrace();
