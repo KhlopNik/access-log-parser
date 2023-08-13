@@ -2,11 +2,12 @@
 public class UserAgent {
     private final Browsers nameBrowser;
     private final OS osType;
-
+    private final Boolean isBot;
     public UserAgent(String userAgent) {
         this.nameBrowser = parsBrowserType(userAgent);
         this.osType = parsOsType(userAgent);
-    }
+        this.isBot = detectBot(userAgent);
+  }
 
     public Browsers getNameBrowser() {
         return nameBrowser;
@@ -14,6 +15,10 @@ public class UserAgent {
 
     public OS getOsType() {
         return osType;
+    }
+
+    public Boolean isBot() {
+        return isBot;
     }
 
     public OS parsOsType(String userAgent) {
@@ -44,6 +49,10 @@ public class UserAgent {
             return Browsers.Firefox;
         }
         return Browsers.Other;
+    }
+
+    private Boolean detectBot(String userAgent){
+        return userAgent.contains("bot");
     }
 }
 

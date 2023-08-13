@@ -16,6 +16,9 @@ public class Statistics {
     private HashSet<String> addressesOfNotExistingPages;
     private HashMap<String, Double> shareOSForNotExistingPages;
     private double countOfNotExistingPages;
+    private int countOfUserVisitsExcludingBots;
+    private int countOfFailedRequests;
+    private HashSet<String> setOfUniqueUsers;
     public Statistics(){
         this.minTime = LocalDateTime.of(9999,1,1,1,1,1);
         this.maxTime = LocalDateTime.of(1000,1,1,1,1,1);
@@ -27,6 +30,9 @@ public class Statistics {
         this.addressesOfNotExistingPages = new HashSet<>();
         this.countOfNotExistingPages = 0;
         this.shareOSForNotExistingPages = new HashMap<>();
+        this.countOfUserVisitsExcludingBots = 0;
+        this.countOfFailedRequests = 0;
+        this.setOfUniqueUsers = new HashSet<>();
     }
 
     public int getTotalTraffic() {
@@ -47,6 +53,13 @@ public class Statistics {
         }
         if (saveAddressesOfNotExistingPage(lg)){
             saveOSOfNotExistingPage(lg);
+        }
+        if (!lg.getUserAgent().isBot()){
+            this.countOfUserVisitsExcludingBots++;
+            this.setOfUniqueUsers.add(lg.getIpAddr());
+        }
+        if (lg.getResponseCode() >= 400){
+            this.countOfFailedRequests++;
         }
     }
     public void saveOSOfExistingPage(LogEntry lg){
@@ -110,6 +123,9 @@ public class Statistics {
         System.out.println("this.maxTime: " + this.maxTime);
         return this.totalTraffic/this.minTime.until(this.maxTime, ChronoUnit.HOURS);
     }
+    public long countOfVisitsPerHour(){
+        return this.countOfUserVisitsExcludingBots/this.minTime.until(this.maxTime, ChronoUnit.HOURS);
+    }
 
     public HashSet<String> getAddressesOfExistingPages() {
         return this.addressesOfExistingPages;
@@ -141,5 +157,12 @@ public class Statistics {
 
     public HashMap<String, Integer> getFrequencyOfNotOccurrenceOfOperatingSystems() {
         return this.frequencyOfNotOccurrenceOfOperatingSystems;
+    }
+
+    public long countFailedRequestsPerHour() {
+        return this.countOfFailedRequests/this.minTime.until(this.maxTime, ChronoUnit.HOURS);
+    }
+    public long countUniqueUsers() {
+        return this.countOfUserVisitsExcludingBots/this.setOfUniqueUsers.size();
     }
 }
