@@ -70,6 +70,7 @@ public class Main {
                         //System.out.println("get OS type: " + lg.getUserAgent().getOsType());
                         //System.out.println("get Browser type: " + lg.getUserAgent().getNameBrowser());
                         //System.out.println("-------------------------");
+                        //System.out.println("is Bot? : " + lg.getUserAgent().isBot(line));
 
                         stat.addEntry(lg);
                     }
@@ -81,6 +82,9 @@ public class Main {
                     //System.out.println("getFrequencyOfNotOccurrenceOfOperatingSystems: " + stat.getFrequencyOfNotOccurrenceOfOperatingSystems());
                     //System.out.println("getShareOSForNotExistingPages: " + stat.getShareOSForNotExistingPages());
                     //System.out.println("getCountOfNotExistingPages: " + stat.getCountOfNotExistingPages());
+                    //System.out.println("countOfVisitsPerHour: " + stat.countOfVisitsPerHour());
+                    //System.out.println("countFailedRequestsPerHour: " + stat.countFailedRequestsPerHour());
+                    System.out.println("countUniqueUsers: " + stat.countUniqueUsers());
 
                 } catch (Exception ex) {
                     ex.printStackTrace();
