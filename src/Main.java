@@ -84,7 +84,12 @@ public class Main {
                     //System.out.println("getCountOfNotExistingPages: " + stat.getCountOfNotExistingPages());
                     //System.out.println("countOfVisitsPerHour: " + stat.countOfVisitsPerHour());
                     //System.out.println("countFailedRequestsPerHour: " + stat.countFailedRequestsPerHour());
-                    System.out.println("countUniqueUsers: " + stat.countUniqueUsers());
+                    //System.out.println("countUniqueUsers: " + stat.countUniqueUsers());
+                    //System.out.println("countOfVisitsPerSecond: " + stat.countOfVisitsPerSecond(2));
+                    //System.out.println("getListReferer: " + stat.getListReferer());
+                    //System.out.println("getCountOfUserVisits: " + stat.getCountOfUserVisits());
+                    //System.out.println("getCountOfUserVisits: " + stat.getCountOfUserVisits());
+                    //System.out.println("getMaxCountOfUserVisits: " + stat.getMaxCountOfUserVisits());
 
                 } catch (Exception ex) {
                     ex.printStackTrace();
